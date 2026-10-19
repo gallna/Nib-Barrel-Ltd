@@ -32,4 +32,3 @@ These are deliberate story hooks, not errors:
 - **DSP-003:** request to keep WooCommerce read-only until 2027-03; the Ops Lead recommends rejecting it.
 - **INV-2026-01:** Amazon oversells; it blocks CA-2026-003.
 - **CR-002 and CR-004:** awaiting the 2026-11-05 Board. CR-002 has a proposed ADR-009 for DPD labels.
-- **Generic README examples:** the top-level `README.md` explanatory sections use generic "PenCo" examples (CR-007, W-02, NFR-02) that are not Nib & Barrel IDs.

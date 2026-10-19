@@ -33,16 +33,16 @@ RQ-003 (requirements) → REQ-01 and ADR-006 (architecture) → SA-30 Engraving 
 
 > Explain each TOGAF Architecture Repository component in detail
 
-| Component | Purpose | Key content and structure | Created / updated | PenCo example |
+| Component | Purpose | Key content and structure | Created / updated | Nib & Barrel example |
 |---|---|---|---|---|
-| **Architecture metamodel** | The organization's tailored version of the framework | Tailored ADM process, tailored content metamodel (entities, attributes, relationships), viewpoint definitions | Preliminary phase; changes rarely, through governance | Core metamodel plus data extension; ADM cut to Phases A, C, E, H |
-| **Architecture capability** | How the EA function itself operates and governs the repository | EA charter, organizational model for EA, roles and skills, Architecture Board terms of reference, templates and tooling. Principles are commonly kept here. | Preliminary; revisited per ADM cycle | 2 part-time architects; the Board is CTO + ops lead; P3 "payments never touch our servers" |
-| **Architecture landscape** | Architectural view of assets in use or planned at a point in time | Three levels: strategic (long-term direction), segment (programme or portfolio), capability (project-level detail). Each has baseline, transition and target states, made up of catalogs, matrices and diagrams across business, data, application and technology. | Phases B–F; Phase H on change | Baseline: marketplace + spreadsheet. Transition 1: own storefront. Target: integrated inventory and engraving. |
-| **Standards information base (SIB)** | Standards the architecture must comply with | Three types: legal/regulatory, industry, organizational. Each standard has a lifecycle state: trial, active, deprecated, obsolete. | Continuously; reviewed by the Board | PCI DSS SAQ-A, GDPR (active); OpenAPI 3.1 (active); TLS 1.0/1.1 (obsolete) |
-| **Reference library** | Reusable reference material | Reference architectures, patterns, templates, guidelines, viewpoint library, external models; classified by the Enterprise Continuum | Ad hoc, as material is adopted | Retail capability map, ADR template, hosted-checkout pattern |
-| **Governance log** | Evidence trail of governance | Decision log, compliance assessments, capability assessments, dispensations (waivers), calendar, project portfolio, performance measures | Every Board meeting, review and waiver | ADR-001 hosted payment page; waiver W-02 for manual stock sync until Q2 |
-| **Architecture requirements repository** | Requirements the Board has authorized | Constraints, NFRs, gap-derived requirements, implementation specifications, contract conformance criteria | Phases A–F, with Requirements Management; Phase H | NFR-02 checkout p95 < 2s; FR-012 engraving |
-| **Solutions landscape** | Architectural view of the SBBs that realize the architecture landscape | ABB→SBB mapping, planned and deployed SBBs, interfaces, lifecycle state | Phases E–G | Storefront ABB → SaaS storefront; Checkout ABB → PSP hosted page |
+| **Architecture metamodel** | The organization's tailored version of the framework | Tailored ADM process, tailored content metamodel (entities, attributes, relationships), viewpoint definitions | Preliminary phase; changes rarely, through governance | [Tailored metamodel](architecture-repository/00-architecture-metamodel/content-metamodel.md) of 13 entity types with stable ID prefixes; [ADM tailored](architecture-repository/01-architecture-capability/tailored-adm.md) to an 8–12 week part-time cycle |
+| **Architecture capability** | How the EA function itself operates and governs the repository | EA charter, organizational model for EA, roles and skills, Architecture Board terms of reference, templates and tooling. Principles are commonly kept here. | Preliminary; revisited per ADM cycle | Ops Lead as part-time Architecture Lead plus a fractional architect; the Board is MD (chair), Ops Lead and Finance Manager ([charter](architecture-repository/01-architecture-capability/architecture-charter.md)); [PR-03](architecture-repository/01-architecture-capability/architecture-principles.md) "Buy before build" |
+| **Architecture landscape** | Architectural view of assets in use or planned at a point in time | Three levels: strategic (long-term direction), segment (programme or portfolio), capability (project-level detail). Each has baseline, transition and target states, made up of catalogs, matrices and diagrams across business, data, application and technology. | Phases B–F; Phase H on change | Baseline: WooCommerce + stock spreadsheet. T1: Shopify live 2026-09-14. Target: engraving at scale, 2027-01 ([roadmap](architecture-repository/02-architecture-landscape/strategic/architecture-roadmap.md)) |
+| **Standards information base (SIB)** | Standards the architecture must comply with | Three types: legal/regulatory, industry, organizational. Each standard has a lifecycle state: trial, active, deprecated, obsolete. | Continuously; reviewed by the Board | [LEG-03](architecture-repository/03-standards-information-base/legal-and-regulatory.md) PCI DSS SAQ A, LEG-01 UK GDPR; [STD-01](architecture-repository/03-standards-information-base/technology-standards.md) Shopify (Adopt), STD-01a WooCommerce (Retire), STD-02a card data on our systems (Prohibited) |
+| **Reference library** | Reusable reference material | Reference architectures, patterns, templates, guidelines, viewpoint library, external models; classified by the Enterprise Continuum | Ad hoc, as material is adopted | [RL-02](architecture-repository/04-reference-library/reference-models.md) TOGAF Business Capabilities guide, the ADR template, PAT-02 webhook hold-and-release pattern |
+| **Governance log** | Evidence trail of governance | Decision log, compliance assessments, capability assessments, dispensations (waivers), calendar, project portfolio, performance measures | Every Board meeting, review and waiver | [ADR-004](architecture-repository/05-governance-log/decision-log.md#adr-004) re-platform to Shopify; [DSP-001](architecture-repository/05-governance-log/dispensations.md) manual engraving transcription until 2027-01-31; CA-2026-001 pre-go-live review |
+| **Architecture requirements repository** | Requirements the Board has authorized | Constraints, NFRs, gap-derived requirements, implementation specifications, contract conformance criteria | Phases A–F, with Requirements Management; Phase H | [REQ-07](architecture-repository/06-architecture-requirements/requirements-catalog.md) card data never enters our systems; REQ-01 live engraving preview; REQ-10 storefront ≥ 99.9% in Nov–Dec |
+| **Solutions landscape** | Architectural view of the SBBs that realize the architecture landscape | ABB→SBB mapping, planned and deployed SBBs, interfaces, lifecycle state | Phases E–G | Commerce Engine ABB → [SBB-01](architecture-repository/07-solutions-landscape/solution-building-blocks.md) Shopify; Personalisation Workflow Service ABB → SBB-09 custom Engraving Queue |
 
 Key relationships:
 - The metamodel defines the types, and all other content must conform to it.
@@ -62,40 +62,32 @@ Risks and anti-patterns:
 
 > Can you give me an example of Architecture Repository for simple ecommerce business selling pens
 
-![TOGAF Architecture repository](images/penco_togaf_architecture_repository.svg)
+![TOGAF Architecture repository](images/nib_barrel_togaf_architecture_repository.svg)
 
-Sample contents, laid out as a Git-backed repository:
+The Nib & Barrel [Architecture Repository](architecture-repository/README.md), laid out as a Git-backed repository:
 
 ```
-penco-ea/
-├─ metamodel/            entities.yaml  (Actor, Capability, Process, DataEntity, AppComponent, TechComponent, WorkPackage)
-├─ capability/           charter.md, principles.md
-│    └─ P1 "Buy before build", P2 "Customer data is minimised", P3 "Payments never touch our servers"
-├─ landscape/
-│  ├─ baseline/          Marketplace shop listings + spreadsheet inventory + manual shipping
-│  ├─ transition-1/      Own storefront, inventory still manual
-│  └─ target/
-│     ├─ business/       capabilities.csv  (Catalog, Order mgmt, Payment, Fulfilment, Customer service)
-│     │                  actors.csv        (Customer, Warehouse clerk, Pen supplier)
-│     │                  order-to-cash.bpmn
-│     ├─ data/           Product{SKU, nib, ink, colour, price}, Customer[PII], Order, Payment[token only], Stock
-│     ├─ application/    app-catalog.csv   ABB: Storefront, Checkout, Order mgmt, Inventory, Email
-│     │                  app-data-matrix.csv
-│     └─ technology/     CDN, managed DB, identity provider, backup
-├─ standards/            PCI-DSS SAQ-A, GDPR, OWASP ASVS L1, OpenAPI 3.1
-├─ reference/            retail capability map, TOGAF templates
-├─ governance/
-│  ├─ adr-001-hosted-payment-page.md   (keeps PCI scope at SAQ-A)
-│  ├─ adr-002-saas-storefront.md
-│  └─ compliance-2026-Q3.md
-├─ requirements/         NFR-01 99.9% uptime, NFR-02 checkout p95 < 2s, NFR-03 RPO 1h / RTO 4h,
-│                        NFR-04 PII erasure within 30 days
-└─ solutions/            abb-sbb.csv  Storefront→hosted SaaS, Checkout→PSP hosted page,
-                                       Inventory→SaaS plugin, Email→transactional ESP (separate from marketing)
+architecture-repository/
+├─ 00-architecture-metamodel/     content-metamodel.md  (13 entity types, ID conventions DRV-, GOL-, PR-, BC-, DE-, APP-, REQ-, ADR- …)
+├─ 01-architecture-capability/    architecture-charter.md, architecture-principles.md, tailored-adm.md, capability-maturity.md
+│    └─ PR-01 "Customer trust comes first", PR-02 "One system of record per data entity", PR-03 "Buy before build" … PR-07
+├─ 02-architecture-landscape/     baseline (2026-03) and target (end 2027) side by side in each document
+│  ├─ strategic/                  vision, business (BC-01..10, value stream), data (DE-01..13, CRUD matrix),
+│  │                              application (APP-01..11, INT-01..10), technology (TEC-01..09), roadmap (GAP, WP, T1/T2/target)
+│  ├─ segment/                    order-to-cash.md
+│  └─ capability/                 personalised-engraving.md  (the only custom-built capability)
+├─ 03-standards-information-base/ legal-and-regulatory.md (LEG-01..08: UK GDPR, PECR, PCI DSS SAQ A …),
+│                                 technology-standards.md (STD-01..12, Trial → Adopt → Contain → Retire → Prohibited)
+├─ 04-reference-library/          reference-models.md (RL-01..09, PAT-01..03), templates/ (ADR, compliance assessment, vendor evaluation)
+├─ 05-governance-log/             decision-log.md (ADR-001..008), dispensations.md (DSP-001..002),
+│                                 compliance-assessments/ (CA-2026-001 Shopify re-platform, CA-2026-002 engraving pilot)
+├─ 06-architecture-requirements/  requirements-catalog.md (REQ-01..15, each linked to its RQ- source record),
+│                                 architecture-contracts/AC-001-engraving-queue.md
+└─ 07-solutions-landscape/        solution-building-blocks.md (ABB → SBB-01..13, retirement plan for legacy SBBs)
 ```
 
 Pushback:
-- **The full TOGAF repository is overkill here.** For a pen shop, keep principles, the target landscape catalogs, ADRs, NFRs and the ABB→SBB map, and drop the rest until you have more than about 10 systems or more than 1 team.
+- **The full TOGAF repository is overkill here.** For a pen shop, keep principles, the target landscape catalogs, ADRs, NFRs and the ABB→SBB map, and drop the rest until you have more than about 10 systems or more than 1 team. Nib & Barrel keeps all eight components, but each one is only one or two short files.
 - **The repository is a single point of failure for decisions.** If it lives in one person's tool or tenant, it goes when they do. Keep it in Git with PR review, so it is versioned and auditable.
 - **Security risk:** never store real PII, API keys or PSP credentials in the repository. Model the entities only, and reference secrets by vault path.
 - **Data integrity risk:** maintaining both catalogs and diagrams by hand will drift apart. Make the CSV/YAML the source of truth and generate the diagrams from it, for example with Mermaid or Structurizr.
@@ -126,10 +118,10 @@ Pushback:
   - **Requirements Management:** assesses impact and controls status.
   - **Architecture Board:** promotes requirements to the architecture requirements repository.
   - **Delivery teams:** implement them.
-- **PenCo examples:**
-  - "Gift wrapping" is proposed, then approved for delivery only.
-  - "Engraving" is approved and promoted.
-  - "Ship to Mars" is rejected, with the reason kept.
+- **Nib & Barrel examples** (see the [requirements register](requirements-repository/03-requirements-register/register.md)):
+  - [RQ-018](requirements-repository/03-requirements-register/records/RQ-018-gift-wrapping.md) "Gift wrapping" was proposed, then approved for delivery only (a Shopify product add-on, no architecture change).
+  - [RQ-005](requirements-repository/03-requirements-register/records/RQ-005-engraving-without-retyping.md) "Engraving text reaches the laser without retyping" was approved as architecturally significant and led to ADR-006 and the Engraving Queue.
+  - [RQ-033](requirements-repository/03-requirements-register/records/RQ-033-store-card-details.md) "Store customers' card details for one-click reorder" was rejected, with the reason kept (REQ-07, STD-02a).
 
 Implementation guidance:
 - **Avoid a separate tool alongside the backlog.** If it duplicates your issue tracker, the two diverge and it becomes shelfware. Use the existing backlog as the requirements repository, with a type field, a status workflow and mandatory triage labels.
@@ -159,15 +151,16 @@ Implementation guidance:
 - Is baselined and versioned, and changes only through Phase H change requests.
 - Feeds the Architecture Requirements Specification deliverable and the compliance reviews.
 
-**PenCo examples:**
+**Nib & Barrel examples:**
 
-| Requirement | Requirements repo | Arch. requirements repo |
+| Requirement | [Requirements repo](requirements-repository/) | [Arch. requirements repo](architecture-repository/06-architecture-requirements/requirements-catalog.md) |
 |---|---|---|
-| "Add gift wrapping option" | ✓ (backlog-level) | ✗ |
-| "Pen engraving, max 20 chars" | ✓ | ✓ new capability and data attribute |
-| "Checkout p95 < 2s" | ✓ | ✓ NFR, contract criterion |
-| "Card data never stored" (PCI SAQ-A) | ✓ | ✓ constraint |
-| "Ship to Mars" | ✓ rejected | ✗ |
+| "Add gift wrapping option" | ✓ RQ-018 (delivery only) | ✗ |
+| "Validate engraving text: max length per SKU, supported characters" | ✓ RQ-004 | ✓ REQ-02, new capability and data attribute (DE-05) |
+| "Storefront ≥ 99.9% available in Nov–Dec" | ✓ RQ-008 | ✓ REQ-10, NFR |
+| "Card data never enters our systems" (PCI DSS SAQ A) | ✓ RQ-023 | ✓ REQ-07, constraint |
+| "Sell to EU customers" | ✓ RQ-030 deferred to ADM cycle 3 | ✗ |
+| "Store customers' card details for one-click reorder" | ✓ RQ-033 rejected | ✗ |
 
 **Rules:**
 - **Copy direction:** an architecture requirement should reference its source record by ID, not copy it. Two editable copies will diverge.
@@ -189,11 +182,11 @@ Implementation guidance:
   - implementation patterns proven in production.
 - **How it differs from the solutions landscape:** the landscape is an architecture view ("the storefront ABB is realized by a SaaS storefront"). The solutions repository is the real asset (the subscription, its configuration, the plugin code, the contract).
 - **Classification:** content is organized along the Solutions Continuum, so reuse goes from generic to specific.
-- **PenCo examples:**
-  - Foundation: a PostgreSQL image and a TLS configuration baseline.
-  - Common systems: the PSP hosted-checkout integration and the transactional email sender.
-  - Industry: a retail order-to-cash module.
-  - Organization-specific: the engraving plugin and the pen SKU import script.
+- **Nib & Barrel examples** (see the [solutions catalogue](solutions-repository/solutions-catalogue.md)):
+  - Foundation: [SA-01](solutions-repository/01-foundation/SA-01-cloudflare-dns.md) Cloudflare DNS zone and [SA-03](solutions-repository/01-foundation/SA-03-google-workspace-security.md) Google Workspace SSO/MFA security baseline.
+  - Common systems: [SA-10](solutions-repository/02-common-systems/SA-10-xero.md) Xero account mapping for the daily summary (ADR-005) and [SA-11](solutions-repository/02-common-systems/SA-11-klaviyo.md) Klaviyo consent configuration.
+  - Industry: [SA-20](solutions-repository/03-industry/SA-20-shopify-store.md) Shopify store configuration baseline and [SA-21](solutions-repository/03-industry/SA-21-click-and-drop.md) Click & Drop shipping rules.
+  - Organization-specific: [SA-30](solutions-repository/04-organisation-specific/SA-30-engraving-queue.md) the custom Engraving Queue (indexed; the code lives in GitHub) and [SA-33](solutions-repository/04-organisation-specific/SA-33-pen-product-data-model.md) the pen product data model (Shopify metafields).
 - **TOGAF detail:** TOGAF says little about its internal structure or tooling, so the implementation is up to you.
 
 Pushback:
@@ -219,10 +212,10 @@ Pushback:
 
 **How it differs from the governance log:** the governance log, inside the architecture repository, records architecture-specific outcomes (decisions, assessments, waivers). The governance repository is the broader operational store for running governance, including in-flight workflow state. TOGAF doesn't draw a crisp boundary between the two, and they overlap heavily.
 
-**PenCo examples:**
-- Reference data: the compliance-review checklist and the dispensation policy (maximum 6 months, owner required).
-- Process status: CR-007 (engraving) awaiting Board review, and waiver request W-03 still open.
-- Audit information: the Q3 compliance review outcome, and W-02 granted on 2026-09-14 by the CTO, expiring Q2.
+**Nib & Barrel examples** (see the [governance repository](governance-repository/README.md)):
+- Reference data: [POL-02](governance-repository/01-reference-data/policies/POL-02-compliance-review-procedure.md) compliance review procedure and [POL-03](governance-repository/01-reference-data/policies/POL-03-dispensation-policy.md) dispensation policy (default maximum 6 months, owner and expiry required).
+- Process status: CR-002 (DPD labels) and CR-004 (ink subscription) awaiting the Board on 2026-11-05, dispensation request [DSP-003](governance-repository/02-process-status/dispensation-requests/DSP-003-woocommerce-extension.md) still open, and investigation [INV-2026-01](governance-repository/02-process-status/investigations/INV-2026-01-amazon-oversells.md) in progress ([open items](governance-repository/02-process-status/open-items.md)).
+- Audit information: [BM-2026-09-10](governance-repository/03-audit-information/board-minutes/BM-2026-09-10.md), where the Board approved the Shopify go-live after CA-2026-001; DSP-001, granted by the Board on 2026-07-16 and expiring 2027-01-31; and evidence EV-2026-012 for the first restore drill ([audit trail](governance-repository/03-audit-information/audit-trail.md)).
 
 Pushback:
 - **Implement it once, not twice.** For an organization this size, the governance log and the governance repository should be one store. Process status can live in your workflow tool (issue tracker), and closed items should land in the append-only log. Two parallel stores will diverge.
