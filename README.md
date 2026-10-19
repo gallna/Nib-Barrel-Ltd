@@ -2,6 +2,18 @@
 
 > **Example only.** Nib & Barrel Ltd is a fictional UK online retailer of fountain pens, ballpoints, inks and refills, with an optional laser-engraving service. This repository shows how a small business could organise its architecture work using the **TOGAF Standard, 10th Edition** Architecture Repository.
 
+## What's in this repository
+
+| Folder | TOGAF repository | Start with |
+|---|---|---|
+| [`architecture-repository/`](architecture-repository/) | Architecture Repository (metamodel, capability, landscape, SIB, reference library, governance log, architecture requirements, solutions landscape) | [README](architecture-repository/README.md) |
+| [`requirements-repository/`](requirements-repository/) | Requirements Repository: every requirement in any status, change requests, impact statements, traceability | [README](requirements-repository/README.md) |
+| [`solutions-repository/`](solutions-repository/) | Solutions Repository: the real assets (configuration baselines, custom code index, contracts, runbooks), classified by the Solutions Continuum | [README](solutions-repository/README.md) |
+| [`governance-repository/`](governance-repository/) | Governance Repository: reference data (policies, procedures), process status (open requests), audit information (minutes, evidence) | [README](governance-repository/README.md) |
+
+All four describe the same moment: **2026-10-19**, during Phase G of ADM cycle 2 ("Project Quill"). Shopify is live, the engraving pilot is running, and the Q4 change freeze starts on 1 November. They link to each other by stable ID (see the [ID conventions](architecture-repository/00-architecture-metamodel/content-metamodel.md#id-conventions)). One thread to follow across all four is engraving:
+RQ-003 (requirements) → REQ-01 and ADR-006 (architecture) → SA-30 Engraving Queue (solutions) → CA-2026-002 and its open condition GA-003 (architecture governance log and governance repository).
+
 ## TOGAF repositories
 
 > what repositories are used in TOGAF

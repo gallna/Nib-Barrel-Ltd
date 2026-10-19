@@ -2,7 +2,7 @@
 
 | Status | Owner | Version | Last reviewed |
 |---|---|---|---|
-| Approved | Architecture Lead (Ops Lead) | 1.1 | 2026-04-02 |
+| Approved | Architecture Lead (Ops Lead) | 1.2 | 2026-10-19 |
 
 ## Purpose
 
@@ -61,3 +61,22 @@ erDiagram
 | `ADR-nnn` | Architecture Decision | ADR-004 Adopt Shopify |
 | `CA-yyyy-nnn` | Compliance Assessment | CA-2026-001 |
 | `DSP-nnn` | Dispensation | DSP-001 |
+
+### IDs used in the other enterprise repositories
+
+The [requirements](../../requirements-repository/), [solutions](../../solutions-repository/) and [governance](../../governance-repository/) repositories use the same convention, and they link to architecture content by the IDs above.
+
+| Prefix | Entity | Repository | Example |
+|---|---|---|---|
+| `RQ-nnn` | Requirement record (any status; promoted ones become `REQ-nn`) | Requirements | RQ-003 Live engraving preview → REQ-01 |
+| `SC-nn` | Stakeholder concern | Requirements | SC-03 Fulfilment team: no retyping |
+| `CR-nnn` | Change request (Phase H) | Requirements | CR-002 Automate DPD labels |
+| `RIS-nnn` | Requirements Impact Statement | Requirements | RIS-001 Impact of CR-002 |
+| `SA-nn` | Solution asset (real configured or deployed item) | Solutions | SA-30 Engraving Queue v0.9.2 |
+| `CTR-nn` | Vendor contract / licence | Solutions | CTR-01 Shopify Advanced |
+| `RB-nn` | Operational runbook | Solutions | RB-01 DSAR & erasure |
+| `POL-nn` | Governance policy / procedure | Governance | POL-03 Dispensation policy |
+| `BM-yyyy-mm-dd` | Architecture Board meeting | Governance | BM-2026-09-10 |
+| `INV-yyyy-nn` | Governance investigation | Governance | INV-2026-01 Amazon oversells |
+| `EV-yyyy-nnn` | Audit evidence item | Governance | EV-2026-012 Restore drill |
+| `GA-nnn` | Governance action (condition / follow-up) | Governance | GA-003 Font-picker contrast |

@@ -28,6 +28,16 @@ TOGAF defines the Architecture Repository as six classes of content, plus requir
 | [`06-architecture-requirements`](06-architecture-requirements/) | Architecture Requirements Repository | Requirements catalogue, architecture contracts |
 | [`07-solutions-landscape`](07-solutions-landscape/) | Solutions Landscape | Solution Building Blocks (SBBs) in use or planned |
 
+### The rest of the Enterprise Repository
+
+This Architecture Repository is one of four sibling repositories. The others hold material that is not architecture description, and they link back here by ID instead of copying content:
+
+| Repository | Holds | Relationship to this repository |
+|---|---|---|
+| [Requirements Repository](../requirements-repository/) | Every requirement in any status, including rejected and deferred ones, plus stakeholder concerns, change requests and impact statements | The Board promotes records (`RQ-nnn`) into [`06-architecture-requirements`](06-architecture-requirements/) as `REQ-nn` |
+| [Solutions Repository](../solutions-repository/) | The real assets: SaaS configuration baselines, the index of custom code, contracts and runbooks | Each asset (`SA-nn`) realises an SBB in [`07-solutions-landscape`](07-solutions-landscape/) |
+| [Governance Repository](../governance-repository/) | Governance procedures, in-flight requests and investigations, Board minutes, audit evidence | Completed outcomes are recorded in [`05-governance-log`](05-governance-log/); the governance repository holds only the process around them |
+
 ## Current architecture engagement
 
 **"Project Quill": re-platforming and engraving at scale** (ADM cycle 2, started 2026-04)
